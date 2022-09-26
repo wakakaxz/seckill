@@ -1,0 +1,31 @@
+spring:
+  ## Thymeleaf 配置
+  thymeleaf:
+    # 关闭缓存
+    cache: false
+  ## 数据源配置
+  datasource:
+    druid:
+      url: jdbc:mysql://10.1.1.128:3306/seckill?useSSL=false
+      username: root
+      password: secret
+      # 初始连接数
+      initial-size: 5
+      # 最小空闲数量
+      min-idle: 5
+      # 最大连接数
+      max-active: 10
+
+# Mybatis-plus 配置
+mybatis-plus:
+  # 配置 Mapper.xml 文件
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml
+  # 配置 Mybatis 数据返回类型别名, 默认别名是类名
+  type-aliases-package: com.xz.seckill.pojo
+#  configuration:
+#    default-executor-type: BATCH
+
+# Mybatis SQL 打印 (方法接口所在的包, 不是 Mapper.xml 所在的包)
+logging:
+  level:
+    com.xz.seckill.mapper: debug

@@ -15,6 +15,25 @@ spring:
       min-idle: 5
       # 最大连接数
       max-active: 10
+  ## redis 配置
+  redis:
+    host: 10.1.1.128
+    port: 6379
+    password: secret
+    database: 0
+    # 连接超时时间
+    timeout: 10000ms
+    lettuce:
+      pool:
+        # 最大连接数
+        max-active: 10
+        # 最大连接阻塞时间, 默认 -1 一直等
+        max-wait: 10000ms
+        # 最小空闲连接, 默认 0
+        min-idle: 3
+        # 最大空闲连接, 默认 8
+        max-idle: 8
+
 
 # Mybatis-plus 配置
 mybatis-plus:

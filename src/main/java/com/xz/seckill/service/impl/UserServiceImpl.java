@@ -13,7 +13,10 @@ import com.xz.seckill.vo.RespBean;
 import com.xz.seckill.vo.RespBeanEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,6 +34,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * @param loginVo  传入的电话号密码
@@ -73,10 +79,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         // 生成 cookie, 设置 cookie
         String ticket = UUIDUtil.uuid();
-        request.getSession().setAttribute(ticket, user);
+
+        // 弃用该方法, 使用直接 Redis 存储
+//        request.getSession().setAttribute(ticket, user);
+        redisTemplate.opsForValue().set("user:" + ticket, user);
+
         CookieUtil.setCookie(request, response, "userTicket", ticket);
 
         return RespBean.success();
+    }
+
+    @Override
+    public User getUserByCookie(String ticket, HttpServletRequest request, HttpServletResponse response) {
+        if (!StringUtils.hasText(ticket)) {
+            return null;
+        }
+
+        User user = (User) redisTemplate.opsForValue().get("user:" + ticket);
+
+        if (user != null) {
+            CookieUtil.setCookie(request, response, "userTicket", ticket);
+        }
+
+        return user;
     }
 }
 

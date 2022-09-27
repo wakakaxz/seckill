@@ -24,7 +24,8 @@ public enum RespBeanEnum {
      */
     LOGIN_ERROR(500210, "输入的用户名或密码错误"),
     MOBILE_ERROR(500211, "输入的手机号码不正确"),
-    NOT_EXIST_ERROR(500212, "用户不存在");
+    NOT_EXIST_ERROR(500212, "用户不存在"),
+    BIND_ERROR(500213, "参数校验异常");
 
     private final Integer code;
     private final String message;

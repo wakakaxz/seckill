@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/login")
 @Slf4j
@@ -19,7 +21,7 @@ public class LoginController {
     private UserService userService;
 
     @PostMapping("/doLogin")
-    public RespBean doLogin(LoginVo loginVo) {
+    public RespBean doLogin(@Valid LoginVo loginVo) {
         return userService.doLogin(loginVo);
     }
 

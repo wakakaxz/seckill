@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.xz.seckill.vo.LoginVo;
 import com.xz.seckill.vo.RespBean;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
 * @author xz
 * @description 针对表【user】的数据库操作Service
@@ -14,7 +17,9 @@ public interface UserService extends IService<User> {
 
     /**
      * @param loginVo  11
+     * @param request
+     * @param response
      * @return 登录
      */
-    RespBean doLogin(LoginVo loginVo);
+    RespBean doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response);
 }

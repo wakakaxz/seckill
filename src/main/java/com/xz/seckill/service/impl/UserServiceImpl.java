@@ -5,16 +5,18 @@ import com.xz.seckill.exception.GlobalException;
 import com.xz.seckill.pojo.User;
 import com.xz.seckill.service.UserService;
 import com.xz.seckill.mapper.UserMapper;
+import com.xz.seckill.util.CookieUtil;
 import com.xz.seckill.util.MD5Util;
-import com.xz.seckill.util.ValidatorUtil;
+import com.xz.seckill.util.UUIDUtil;
 import com.xz.seckill.vo.LoginVo;
 import com.xz.seckill.vo.RespBean;
 import com.xz.seckill.vo.RespBeanEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -31,12 +33,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
 
     /**
-     * @param loginVo 传入的电话号密码
+     * @param loginVo  传入的电话号密码
+     * @param request
+     * @param response
      * @return 执行结果
      * 可以发现每次都需要大量的判断, 怎么办? 引入 spring-boot-starter-validation
      */
     @Override
-    public RespBean doLogin(LoginVo loginVo) {
+    public RespBean doLogin(LoginVo loginVo, HttpServletRequest request, HttpServletResponse response) {
         String mobile = loginVo.getMobile();
         String password = loginVo.getPassword();
 
@@ -67,6 +71,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             throw new GlobalException(RespBeanEnum.LOGIN_ERROR);
         }
 
+        // 生成 cookie, 设置 cookie
+        String ticket = UUIDUtil.uuid();
+        request.getSession().setAttribute(ticket, user);
+        CookieUtil.setCookie(request, response, "userTicket", ticket);
 
         return RespBean.success();
     }

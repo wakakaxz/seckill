@@ -1,6 +1,7 @@
 package com.xz.seckill;
 
 import com.xz.seckill.util.MD5Util;
+import com.xz.seckill.util.UUIDUtil;
 import com.xz.seckill.vo.RespBeanEnum;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,12 +20,19 @@ class SeckillApplicationTests {
         System.out.println(MD5Util.md5("123456"));
     }
 
+    @DisplayName("枚举类型")
     @Test
     void test2() {
 
         for (RespBeanEnum value : RespBeanEnum.values()) {
             System.out.println(value);
         }
+    }
+
+    @DisplayName("uuid")
+    @Test
+    void test3() {
+        System.out.println(UUIDUtil.uuid());
     }
 
 }

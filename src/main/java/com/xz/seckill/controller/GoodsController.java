@@ -22,22 +22,22 @@ public class GoodsController {
     private UserService userService;
 
     @GetMapping("/toList")
-    public User toList(HttpServletRequest request, HttpServletResponse response, @CookieValue("userTicket") String ticket) {
+    public String toList(User user) {
 
-        if (!StringUtils.hasText(ticket)) {
-            return null;
-        }
+//        if (!StringUtils.hasText(ticket)) {
+//            return null;
+//        }
 
         // 弃用该方法, 直接在 redis 中获取
 //        User user = (User) session.getAttribute(ticket);
 
-        User user = userService.getUserByCookie(ticket, request, response);
-
-        if (null == user) {
-            return null;
-        }
-
-        return user;
+//        User user = userService.getUserByCookie(ticket, request, response);
+//
+//        if (null == user) {
+//            return null;
+//        }
+        // 直接判断是否登录即可
+        return user.toString();
     }
 
 }

@@ -34,7 +34,6 @@ spring:
         # 最大空闲连接, 默认 8
         max-idle: 8
 
-
 # Mybatis-plus 配置
 mybatis-plus:
   # 配置 Mapper.xml 文件
@@ -48,3 +47,4 @@ mybatis-plus:
 logging:
   level:
     com.xz.seckill.mapper: debug
+

@@ -1,18 +1,13 @@
 package com.xz.seckill.controller;
 
 import com.xz.seckill.pojo.User;
+import com.xz.seckill.service.GoodsService;
 import com.xz.seckill.service.UserService;
+import com.xz.seckill.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/goods")
@@ -21,8 +16,11 @@ public class GoodsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private GoodsService goodsService;
+
     @GetMapping("/toList")
-    public String toList(User user) {
+    public List<GoodsVo> toList(User user) {
 
 //        if (!StringUtils.hasText(ticket)) {
 //            return null;
@@ -37,7 +35,13 @@ public class GoodsController {
 //            return null;
 //        }
         // 直接判断是否登录即可
-        return user.toString();
+        return goodsService.findGoodVo();
+    }
+
+    @GetMapping("/toDetail/{goodsId}")
+    public GoodsVo toDetail(User user, @PathVariable Long goodsId) {
+        System.out.println(user);
+        return goodsService.findGoodVoByGoodsId(goodsId);
     }
 
 }

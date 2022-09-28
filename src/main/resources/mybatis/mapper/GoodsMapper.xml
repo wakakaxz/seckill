@@ -5,15 +5,15 @@
 <mapper namespace="com.xz.seckill.mapper.GoodsMapper">
 
     <resultMap id="BaseResultMap" type="com.xz.seckill.pojo.Goods">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
-            <result property="goodsTitle" column="goods_title" jdbcType="VARCHAR"/>
-            <result property="goodsImg" column="goods_img" jdbcType="VARCHAR"/>
-            <result property="goodsDetail" column="goods_detail" jdbcType="VARCHAR"/>
-            <result property="goodsPrice" column="goods_price" jdbcType="DECIMAL"/>
-            <result property="goodsStock" column="goods_stock" jdbcType="INTEGER"/>
-            <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
-            <result property="modifiedDate" column="modified_date" jdbcType="TIMESTAMP"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>
+        <result property="goodsTitle" column="goods_title" jdbcType="VARCHAR"/>
+        <result property="goodsImg" column="goods_img" jdbcType="VARCHAR"/>
+        <result property="goodsDetail" column="goods_detail" jdbcType="VARCHAR"/>
+        <result property="goodsPrice" column="goods_price" jdbcType="DECIMAL"/>
+        <result property="goodsStock" column="goods_stock" jdbcType="INTEGER"/>
+        <result property="createDate" column="create_date" jdbcType="TIMESTAMP"/>
+        <result property="modifiedDate" column="modified_date" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -21,4 +21,44 @@
         goods_img,goods_detail,goods_price,
         goods_stock,create_date,modified_date
     </sql>
+
+    <!-- 获取商品列表   -->
+    <select id="findGoodVo" resultType="com.xz.seckill.vo.GoodsVo">
+        SELECT g.id,
+               g.goods_name,
+               g.goods_title,
+               g.goods_img,
+               g.goods_detail,
+               g.goods_price,
+               g.goods_stock,
+               g.create_date,
+               g.modified_date,
+               sg.seckill_price,
+               sg.stock_count,
+               sg.start_date,
+               sg.end_date
+        FROM goods AS g
+                 LEFT JOIN seckill_goods sg on g.id = sg.good_id
+    </select>
+
+    <!-- 根据商品 id 获取商品详情   -->
+    <select id="findGoodVoByGoodsId" resultType="com.xz.seckill.vo.GoodsVo">
+        SELECT g.id,
+               g.goods_name,
+               g.goods_title,
+               g.goods_img,
+               g.goods_detail,
+               g.goods_price,
+               g.goods_stock,
+               g.create_date,
+               g.modified_date,
+               sg.seckill_price,
+               sg.stock_count,
+               sg.start_date,
+               sg.end_date
+        FROM goods AS g
+                 LEFT JOIN seckill_goods sg on g.id = sg.good_id
+        WHERE g.id = #{goodId, jdbcType=BIGINT}
+    </select>
+
 </mapper>

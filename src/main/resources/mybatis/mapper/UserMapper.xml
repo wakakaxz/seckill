@@ -5,13 +5,13 @@
 <mapper namespace="com.xz.seckill.mapper.UserMapper">
 
     <resultMap id="BaseResultMap" type="com.xz.seckill.pojo.User">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
-            <result property="password" column="password" jdbcType="VARCHAR"/>
-            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
-            <result property="registerDate" column="register_date" jdbcType="TIMESTAMP"/>
-            <result property="lastLoginDate" column="last_login_date" jdbcType="TIMESTAMP"/>
-            <result property="loginCount" column="login_count" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="userId" column="user_id" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
+        <result property="registerDate" column="register_date" jdbcType="TIMESTAMP"/>
+        <result property="lastLoginDate" column="last_login_date" jdbcType="TIMESTAMP"/>
+        <result property="loginCount" column="login_count" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -21,10 +21,9 @@
     </sql>
 
     <select id="selectByUserId" resultType="com.xz.seckill.pojo.User">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from user
-        where
-        user_id = #{userId,jdbcType=VARCHAR}
+        FROM user
+        WHERE user_id = #{userId, jdbcType=VARCHAR}
     </select>
 </mapper>

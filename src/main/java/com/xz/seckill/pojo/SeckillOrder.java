@@ -23,7 +23,7 @@ public class SeckillOrder implements Serializable {
     /**
      * 用户 id
      */
-    private Long userId;
+    private String userId;
 
     /**
      * 订单 id

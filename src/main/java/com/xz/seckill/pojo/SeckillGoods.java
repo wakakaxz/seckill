@@ -25,7 +25,7 @@ public class SeckillGoods implements Serializable {
     /**
      * 商品 id
      */
-    private Long goodId;
+    private Long goodsId;
 
     /**
      * 秒杀价

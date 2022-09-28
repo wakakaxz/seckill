@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.xz.seckill.pojo.Order">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
+            <result property="userId" column="user_id" jdbcType="VARCHAR"/>
             <result property="goodsId" column="goods_id" jdbcType="BIGINT"/>
             <result property="deliveryAddrId" column="delivery_addr_id" jdbcType="BIGINT"/>
             <result property="goodsName" column="goods_name" jdbcType="VARCHAR"/>

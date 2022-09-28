@@ -6,7 +6,7 @@
 
     <resultMap id="BaseResultMap" type="com.xz.seckill.pojo.SeckillGoods">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="goodId" column="good_id" jdbcType="BIGINT"/>
+            <result property="goodsId" column="good_id" jdbcType="BIGINT"/>
             <result property="seckillPrice" column="seckill_price" jdbcType="DECIMAL"/>
             <result property="stockCount" column="stock_count" jdbcType="INTEGER"/>
             <result property="startDate" column="start_date" jdbcType="TIMESTAMP"/>
@@ -14,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,good_id,seckill_price,
+        id,goods_id,seckill_price,
         stock_count,start_date,end_date
     </sql>
 </mapper>

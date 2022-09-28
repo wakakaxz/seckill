@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -83,6 +84,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         // 弃用该方法, 使用直接 Redis 存储
 //        request.getSession().setAttribute(ticket, user);
         redisTemplate.opsForValue().set("user:" + ticket, user);
+
+        // 设置时间
+//        redisTemplate.opsForValue().set("user:" + ticket, user, 100, TimeUnit.SECONDS);
 
         CookieUtil.setCookie(request, response, "userTicket", ticket);
 

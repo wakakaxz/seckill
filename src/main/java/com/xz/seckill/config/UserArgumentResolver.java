@@ -3,6 +3,7 @@ package com.xz.seckill.config;
 import com.xz.seckill.pojo.User;
 import com.xz.seckill.service.UserService;
 import com.xz.seckill.util.CookieUtil;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -45,6 +46,7 @@ public class UserArgumentResolver implements HandlerMethodArgumentResolver {
         if (!StringUtils.hasText(ticket)) {
             return null;
         }
+
         return userService.getUserByCookie(ticket, request, response);
     }
 }

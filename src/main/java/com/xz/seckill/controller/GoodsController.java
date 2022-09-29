@@ -40,7 +40,6 @@ public class GoodsController {
 
     @GetMapping("/toDetail/{goodsId}")
     public GoodsVo toDetail(User user, @PathVariable Long goodsId) {
-        System.out.println(user);
         return goodsService.findGoodVoByGoodsId(goodsId);
     }
 

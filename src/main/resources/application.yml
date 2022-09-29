@@ -6,6 +6,7 @@ spring:
   ## 数据源配置
   datasource:
     druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
       url: jdbc:mysql://10.1.1.128:3306/seckill?useSSL=false
       username: root
       password: secret

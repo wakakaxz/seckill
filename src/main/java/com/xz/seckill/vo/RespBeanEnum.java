@@ -26,6 +26,7 @@ public enum RespBeanEnum {
     MOBILE_ERROR(500211, "输入的手机号码不正确"),
     NOT_EXIST_ERROR(500212, "用户不存在"),
     BIND_ERROR(500213, "参数校验异常"),
+    NOT_LOGIN(500214, "未获取到用户的登录信息"),
 
     /**
      * 秒杀模块

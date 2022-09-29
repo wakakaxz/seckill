@@ -2,6 +2,7 @@ package com.xz.seckill;
 
 import com.xz.seckill.util.MD5Util;
 import com.xz.seckill.util.UUIDUtil;
+import com.xz.seckill.util.UserUtil;
 import com.xz.seckill.vo.RespBeanEnum;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,4 +36,13 @@ class SeckillApplicationTests {
         System.out.println(UUIDUtil.uuid());
     }
 
+    @DisplayName("用户生成")
+    @Test
+    void test4() {
+//        try {
+//            UserUtil.createUser(10);
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+    }
 }

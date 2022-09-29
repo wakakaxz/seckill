@@ -90,7 +90,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
         CookieUtil.setCookie(request, response, "userTicket", ticket);
 
-        return RespBean.success();
+        return RespBean.success(ticket);
     }
 
     @Override

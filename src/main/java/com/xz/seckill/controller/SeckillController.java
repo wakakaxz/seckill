@@ -43,6 +43,10 @@ public class SeckillController {
      */
     @PostMapping("/doSeckill")
     public RespBean doSeckill(User user, @RequestParam Long goodsId) {
+        if (null == user) {
+            return RespBean.error(RespBeanEnum.NOT_LOGIN);
+        }
+
         GoodsVo goodsVo = goodsService.findGoodVoByGoodsId(goodsId);
         // 判断库存
         if (goodsVo.getStockCount() < 1) {

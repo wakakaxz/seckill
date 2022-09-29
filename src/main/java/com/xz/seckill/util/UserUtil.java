@@ -81,10 +81,10 @@ public class UserUtil {
             String response = new String(byteArrayOutputStream.toByteArray());
             ObjectMapper mapper = new ObjectMapper();
             RespBean respBean = mapper.readValue(response, RespBean.class);
-
+            String userTicket = (String) respBean.getObject();
             System.out.println("user:" + user.getUserId());
 
-            String line = user.getUserId() + "," + MD5Util.md5("123456");
+            String line = user.getUserId() + "," + userTicket;
             raf.seek(raf.length());
             raf.write(line.getBytes());
             raf.write("\r\n".getBytes());

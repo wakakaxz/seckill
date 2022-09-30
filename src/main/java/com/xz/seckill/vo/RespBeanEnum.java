@@ -27,6 +27,7 @@ public enum RespBeanEnum {
     NOT_EXIST_ERROR(500212, "用户不存在"),
     BIND_ERROR(500213, "参数校验异常"),
     NOT_LOGIN(500214, "未获取到用户的登录信息"),
+    UPDATE_PASSWORD_FAIL(500215, "修改密码失败"),
 
     /**
      * 秒杀模块

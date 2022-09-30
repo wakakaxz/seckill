@@ -29,4 +29,11 @@ public interface UserService extends IService<User> {
      * @return
      */
     User getUserByCookie(String ticket, HttpServletRequest request, HttpServletResponse response);
+
+    /**
+     * 更新密码
+     * @return
+     */
+    RespBean updatePassword(String ticket, HttpServletRequest request, HttpServletResponse response, String newPassword);
+
 }

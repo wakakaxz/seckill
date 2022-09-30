@@ -26,4 +26,10 @@
         FROM user
         WHERE user_id = #{userId, jdbcType=VARCHAR}
     </select>
+
+    <update id="updatePasswordByUserId">
+        UPDATE user
+        SET password = #{password, jdbcType=VARCHAR}
+        WHERE user_id = #{userId, jdbcType=VARCHAR}
+    </update>
 </mapper>

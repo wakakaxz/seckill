@@ -13,6 +13,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface UserMapper extends BaseMapper<User> {
     User selectByUserId(@Param("userId") String userId);
+
+    int updatePasswordByUserId(String userId, String password);
 }
 
 

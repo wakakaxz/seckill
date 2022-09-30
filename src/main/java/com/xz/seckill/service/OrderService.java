@@ -13,4 +13,6 @@ import com.xz.seckill.vo.GoodsVo;
 public interface OrderService extends IService<Order> {
 
     Order seckill(User user, GoodsVo goodsVo);
+
+    Order detailById(Long orderId);
 }

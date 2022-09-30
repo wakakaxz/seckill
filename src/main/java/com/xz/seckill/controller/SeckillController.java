@@ -11,6 +11,7 @@ import com.xz.seckill.vo.GoodsVo;
 import com.xz.seckill.vo.RespBean;
 import com.xz.seckill.vo.RespBeanEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,9 @@ public class SeckillController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     /**
      * 加上 @RequestParam 注解可以防止传来的参数为空, 若为空抛出异常, 自定义校验直接使用 @Valid
      *
@@ -54,8 +58,12 @@ public class SeckillController {
         }
 
         // 判断是否重复抢购
-        SeckillOrder seckillOrder = seckillOrderService.getOne(new QueryWrapper<SeckillOrder>().
-                eq("user_id", user.getUserId()).eq("goods_id", goodsId));
+//        SeckillOrder seckillOrder = seckillOrderService.getOne(new QueryWrapper<SeckillOrder>().
+//                eq("user_id", user.getUserId()).eq("goods_id", goodsId));
+
+        // 从 Redis 中获取
+        SeckillOrder seckillOrder = (SeckillOrder) redisTemplate.opsForValue().get("order:" + user.getUserId() + ":" + goodsId);
+
         if (seckillOrder != null) {
             return RespBean.error(RespBeanEnum.REPEAT_ERROR);
         }

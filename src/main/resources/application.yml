@@ -3,6 +3,7 @@ spring:
   thymeleaf:
     # 关闭缓存
     cache: false
+
   ## 数据源配置
   datasource:
     druid:
@@ -16,6 +17,7 @@ spring:
       min-idle: 5
       # 最大连接数
       max-active: 10
+
   ## redis 配置
   redis:
     host: 10.1.1.128
@@ -35,7 +37,43 @@ spring:
         # 最大空闲连接, 默认 8
         max-idle: 8
 
-# Mybatis-plus 配置
+  ## rabbitMQ 配置
+  rabbitmq:
+    # 主机地址
+    host: 10.1.1.128
+    port: 5672
+    username: root
+    password: secret
+    # 虚拟主机, 本质上是一个独立的小型 RabbitMQ 服务器，拥有自己独立的队列、交换器及绑定关系等，井且它拥有自己独立的权限。
+    # 它既能将同一个 RabbitMQ 中的众多客户区分开，又可以避免队列和交换器等命名冲突。
+    virtual-host: /
+    listener:
+      simple:
+        # 消费者最小数量
+        concurrency: 10
+        # 消费者最大数量
+        max-concurrency: 10
+        # 限制消费者每次只能处理 1 条信息, 处理完之后再继续下一条消息
+        prefetch: 1
+        # 启动时是否默认启动容器, 默认 true
+        auto-startup: true
+        # 消息被拒绝时是否重新进入队列
+        default-requeue-rejected: true
+    template:
+      retry:
+        # 发布重试
+        enabled: true
+        # 重试时间默认 1000 ms
+        initial-interval: 1000ms
+        # 最大重试次数, 默认 3
+        max-attempts: 3
+        # 重试最大间隔时间, 默认 10000ms
+        max-interval: 10000ms
+        # 重试间隔乘数, 若配置 2.0, 表示第一次等 10 s, 第二次等 20 s, 第三次等 40 s
+        multiplier: 1
+
+
+### Mybatis-plus 配置
 mybatis-plus:
   # 配置 Mapper.xml 文件
   mapper-locations: classpath:mybatis/mapper/*Mapper.xml
@@ -44,7 +82,7 @@ mybatis-plus:
 #  configuration:
 #    default-executor-type: BATCH
 
-# Mybatis SQL 打印 (方法接口所在的包, 不是 Mapper.xml 所在的包)
+### Mybatis SQL 打印 (方法接口所在的包, 不是 Mapper.xml 所在的包)
 logging:
   level:
     com.xz.seckill.mapper: debug

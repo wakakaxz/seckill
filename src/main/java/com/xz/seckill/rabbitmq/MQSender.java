@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 消息发送者
+ *
  * @author xz
  */
 @Service
@@ -15,8 +16,14 @@ public class MQSender {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+//    public void send(Object msg) {
+//        log.info("发送消息: " + msg);
+//        rabbitTemplate.convertAndSend("queue", msg);
+//    }
+
     public void send(Object msg) {
         log.info("发送消息: " + msg);
-        rabbitTemplate.convertAndSend("queue", msg);
+        // 发送到交换机
+        rabbitTemplate.convertAndSend("fanoutExchange", "", msg);
     }
 }

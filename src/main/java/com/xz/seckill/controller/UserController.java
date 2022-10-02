@@ -34,4 +34,11 @@ public class UserController {
         mqSender.send("Hello, 哒哒哒");
     }
 
+    /**
+     * fanout 模式测试, 向交换机发送一条消息
+     */
+    @GetMapping("/mq/fanout")
+    public void mqFanout() {
+        mqSender.send("Hello, 发布者发送一条消息");
+    }
 }

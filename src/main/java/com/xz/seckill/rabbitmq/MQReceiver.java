@@ -37,4 +37,14 @@ public class MQReceiver {
     public void receive04(Object msg) {
         log.info("QUEUEGreen接受消息: " + msg);
     }
+
+    @RabbitListener(queues = "queue_topic01")
+    public void receive05(Object msg) {
+        log.info("#.queue.# 接受消息: " + msg);
+    }
+
+    @RabbitListener(queues = "queue_topic02")
+    public void receive06(Object msg) {
+        log.info("*.queue.# 接受消息: " + msg);
+    }
 }

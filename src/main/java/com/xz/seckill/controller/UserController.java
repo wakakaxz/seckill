@@ -54,4 +54,17 @@ public class UserController {
     public void mqDirect02() {
         mqSender.sendRoutingGreen("Hello, 发布者发送一条消息");
     }
+
+    /**
+     * Topic 模式测试
+     */
+    @GetMapping("/mq/topic01")
+    public void mqTopic01() {
+        mqSender.sendTopic01("Hello, 发布者发送一条消息");
+    }
+
+    @GetMapping("/mq/topic02")
+    public void mqTopic02() {
+        mqSender.sendTopic02("Hello, 发布者发送一条消息");
+    }
 }

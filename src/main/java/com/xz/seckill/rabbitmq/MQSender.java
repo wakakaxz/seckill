@@ -26,4 +26,14 @@ public class MQSender {
         // 发送到交换机
         rabbitTemplate.convertAndSend("fanoutExchange", "", msg);
     }
+
+    public void sendRoutingRed(Object msg) {
+        log.info("发送 red 消息: " + msg);
+        rabbitTemplate.convertAndSend("directExchange", "queue.red", msg);
+    }
+
+    public void sendRoutingGreen(Object msg) {
+        log.info("发送 green 消息: " + msg);
+        rabbitTemplate.convertAndSend("directExchange", "queue.green", msg);
+    }
 }

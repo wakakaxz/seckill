@@ -41,4 +41,17 @@ public class UserController {
     public void mqFanout() {
         mqSender.send("Hello, 发布者发送一条消息");
     }
+
+    /**
+     * Direct 模式测试
+     */
+    @GetMapping("/mq/directRed")
+    public void mqDirect01() {
+        mqSender.sendRoutingRed("Hello, 发布者发送一条消息");
+    }
+
+    @GetMapping("/mq/directGreen")
+    public void mqDirect02() {
+        mqSender.sendRoutingGreen("Hello, 发布者发送一条消息");
+    }
 }

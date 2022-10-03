@@ -62,9 +62,9 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
          * */
 //        seckillGoodsMapper.updateById(seckillGoods);
         int seckillResult = seckillGoodsMapper.update(null, new UpdateWrapper<SeckillGoods>()
-                                .setSql("stock_count = stock_count - 1")
-                                .eq("id", seckillGoods.getId())
-                                .gt("stock_count", 0));
+                .setSql("stock_count = stock_count - 1")
+                .eq("id", seckillGoods.getId())
+                .gt("stock_count", 0));
 
         // 是否插入成功
         if (seckillResult == 0) {
@@ -93,7 +93,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
 
         // 秒杀订单存储在 Redis
         redisTemplate.opsForValue().set("order:" + user.getUserId() + ":" + goodsVo.getId(),
-                seckillOrder, 60, TimeUnit.SECONDS);
+                seckillOrder, 10, TimeUnit.MINUTES);
 
         return order;
     }

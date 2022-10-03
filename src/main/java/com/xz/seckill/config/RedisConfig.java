@@ -71,12 +71,21 @@ public class RedisConfig {
         return template;
     }
 
+//    @Bean
+//    public RedisScript<Boolean> script() {
+//        DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<>();
+//        // lock.lua 脚本位置
+//        redisScript.setLocation(new ClassPathResource("redisLua/lock.lua"));
+//        redisScript.setResultType(Boolean.class);
+//        return redisScript;
+//    }
+
     @Bean
-    public RedisScript<Boolean> script() {
-        DefaultRedisScript<Boolean> redisScript = new DefaultRedisScript<>();
+    public RedisScript<Long> script() {
+        DefaultRedisScript<Long> redisScript = new DefaultRedisScript<>();
         // lock.lua 脚本位置
-        redisScript.setLocation(new ClassPathResource("redisLua/lock.lua"));
-        redisScript.setResultType(Boolean.class);
+        redisScript.setLocation(new ClassPathResource("redisLua/stock.lua"));
+        redisScript.setResultType(Long.class);
         return redisScript;
     }
 }

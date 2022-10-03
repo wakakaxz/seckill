@@ -15,9 +15,11 @@ import com.xz.seckill.vo.RespBeanEnum;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +42,9 @@ public class SeckillController implements InitializingBean {
 
     @Autowired
     private MQSender mqSender;
+
+    @Autowired
+    private RedisScript<Long> redisScript;
 
     /**
      * 标记库存为空
@@ -100,7 +105,12 @@ public class SeckillController implements InitializingBean {
         }
 
         // 预减库存, 返回一个递减后的库存
-        Long stock = redisTemplate.opsForValue().decrement("seckillGoods:" + goodsId);
+//        Long stock = redisTemplate.opsForValue().decrement("seckillGoods:" + goodsId);
+
+        Long stock = (Long) redisTemplate.execute(redisScript,
+                Collections.singletonList("seckillGoods:" + goodsId),
+                Collections.EMPTY_LIST);
+
         if (stock < 0) {
             emptyStockMap.put(goodsId, true);
             // 防止库存数量为 -1, 递增一下
@@ -119,6 +129,7 @@ public class SeckillController implements InitializingBean {
 
     /**
      * 获取描述结果
+     *
      * @param user
      * @param goodsId
      * @return orderId 成功, -1: 秒杀失败,  0: 排队中
@@ -136,13 +147,12 @@ public class SeckillController implements InitializingBean {
     /**
      * Bean 初始化时执行的方法
      * 1：spring为bean提供了两种初始化bean的方式，实现InitializingBean接口，实现afterPropertiesSet方法，
-     *              或者在配置文件中同过init-method指定，两种方式可以同时使用
+     * 或者在配置文件中同过init-method指定，两种方式可以同时使用
      * 2：实现InitializingBean接口是直接调用afterPropertiesSet方法，比通过反射调用init-method指定的方法效率相对来说要高点。
-     *              但是init-method方式消除了对spring的依赖
+     * 但是init-method方式消除了对spring的依赖
      * 3：如果调用afterPropertiesSet方法时出错，则不调用init-method指定的方法。
-     * @throws Exception
      *
-     * 系统初始化的时候将商品的库存数量加载到 Redis
+     * @throws Exception 系统初始化的时候将商品的库存数量加载到 Redis
      */
     @Override
     public void afterPropertiesSet() throws Exception {
@@ -151,7 +161,7 @@ public class SeckillController implements InitializingBean {
             return;
         }
         list.forEach(goodsVo -> {
-            redisTemplate.opsForValue().set("seckillGoods:"+ goodsVo.getId(), goodsVo.getStockCount());
+            redisTemplate.opsForValue().set("seckillGoods:" + goodsVo.getId(), goodsVo.getStockCount());
             emptyStockMap.put(goodsVo.getId(), false);
         });
     }

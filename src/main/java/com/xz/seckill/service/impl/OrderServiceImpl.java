@@ -50,6 +50,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
         // 减库存
         SeckillGoods seckillGoods = seckillGoodsMapper.selectOne(new QueryWrapper<SeckillGoods>().eq("goods_id", goodsVo.getId()));
         if (seckillGoods.getStockCount() < 1) {
+            // 没库存
+            redisTemplate.opsForValue().set("isStockEmpty:" + goodsVo.getId(), "0");
             throw new GlobalException(RespBeanEnum.EMPTY_STOCK);
         }
 //        seckillGoods.setStockCount(seckillGoods.getStockCount() - 1);
@@ -64,6 +66,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderMapper, Order>
                                 .eq("id", seckillGoods.getId())
                                 .gt("stock_count", 0));
 
+        // 是否插入成功
         if (seckillResult == 0) {
             throw new GlobalException(RespBeanEnum.EMPTY_STOCK);
         }
